@@ -1,0 +1,72 @@
+1)
+push 8 elements (8 units)/(8 ops)
+push 1 element/resize to 16 (9 units)/(1 op)
+push 7 elements(7 units)/(7 ops)
+push 1 element/resize to 32 (17 units / 1 op)
+push 7 elements(7 units)/(7 ops)
+push 8 elements(8 units)/(8 ops)
+
+Total cost = 56 units of time
+
+The operation heads toward O(1) complexity as n grows large.
+
+2)
+push 8 elements (8 units)/(8 ops)
+resize to 10 (8 units)/(1 op)
+push 2 elements(2 units)/(2 ops)
+resize to 12 (10 units / 1 op)
+push 2 elements(2 units)/(2 ops)
+resize to 14 (12 units / 1 op)
+push 2 elements(2 units)/(2 ops)
+resize to 16 (14 units / 1 op)
+push 2 elements(2 units)/(2 ops)
+resize to 18 (16 units / 1 op)
+push 2 elements(2 units)/(2 ops)
+resize to 20 (18 units / 1 op)
+push 2 elements(2 units)/(2 ops)
+resize to 22 (20 units / 1 op)
+push 2 elements(2 units)/(2 ops)
+resize to 24 (22 units / 1 op)
+push 2 elements(2 units)/(2 ops)
+resize to 26 (24 units / 1 op)
+push 2 elements(2 units)/(2 ops)
+resize to 28 (26 units / 1 op)
+push 2 elements(2 units)/(2 ops)
+resize to 30 (28 units / 1 op)
+push 2 elements(2 units)/(2 ops)
+resize to 32 (30 units / 1 op)
+push 2 elements(2 units)/(2 ops)
+
+total cost = 258 units
+
+total operations = 44
+
+This seems to be heading toward O(n^2) complexity as n grows large
+
+3)
+
+This data structure would perform poorly if one were to constantly push at n/2 and then immediately pop.
+For example:
+
+Array cap 8
+Array size 8
+
+push()
+
+Array cap 16
+Array size 9
+
+pop()
+
+Array cap 8
+Array size 8
+
+...
+
+The above would be very costly. One way to mitigate this would be to change the threshold for shrinking to n/4.
+Thus when the array reaches 1/4th of its capacity, its capacity can be shrunk by half. Doubling would work
+like normal. This would give a margin that one could go over or under that is proportional to the size of the
+dataset.
+
+Another way that one could do this is having a hard coded margin tied to shrinking, but that is more rigid and wouldn't
+work as well as the data grows beyond anticipated size.
