@@ -3,8 +3,8 @@ Assignments from OSU
 
 CS165 - ACCELERATED INTRO TO COMP SCI
 
-Markup : * CS261 - DATA STRUCTURES
-            * Programming Assignment 1 - C Pointers Practice
+* CS261 - DATA STRUCTURES
+  * Programming Assignment 1 - C Pointers Practice
 
 CS271 - COMPUTER ARCH & ASSEM LANGUAGE
 
