@@ -1,0 +1,16 @@
+1. This means that only once branch is being covered. 
+In the case of a for/if, it means that we've only covered
+the scenario in which each iteration evaluates to true in the
+if statement.
+
+2. Interfaces are N/A because all the methods in an
+interface are abstract. This means the methods contain no
+implementation. In other words, there is nothing to test.
+
+3. testBasicFunctionality may run through only the most
+predictable scenarios. Tests should be designed to try to
+break individual components to simulate extraordinary
+circumstances.
+
+4. As the number if/else if/else statements increases, the
+number of branches to be covered increases exponentially.

@@ -1,0 +1,18 @@
+I believe the bug lies within the logic of discardCard.
+The method discardCard relies on the remove method of the
+ArrayList class. The remove method shifts all elements to the 
+left after it removes the specified element from the 
+specified position.
+
+The bug does not surface if you consistently remove cards from the
+top of the deck (i.e. the last element of the CardCollection 
+ArrayList).
+
+Neither will the bug be noticed if a card is picked from the middle.
+The rest of the cards will be shifted in place and the order of the 
+cards will be preserved.
+
+However, if you remove a card from the middle of the CardCollection
+and then attempt to add it back, it must be appended to the back of
+the CardCollection. We are not provided a method that will allow
+us to reinsert the card in the spot that we removed it from.

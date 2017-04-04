@@ -1,0 +1,33 @@
+1. True
+
+2. False
+
+3. False. In a for/if/else statement, even if the if and else clauses 
+are both satisfied during multiple iterations, it doesn't mean that
+every possibility within the if or the else statement is satisfied.
+The goal in statment/line coverage with a a simple if statment 
+is to cover every node of the graph. However, in branch coverage, 
+you must cover all the nodes AND all the edges.
+
+4. True. If you cover every edge, then you must have also covered
+every node. 
+
+5. False. Path coverage differs from branch coverage in that not 
+only do you have to check every node and every edge, but every 
+combination of every node and every edge leading to the termination
+of a given block of code. There are exponentially more outcomes to 
+check.
+
+6. I expected to have higher branch coverage but I understand why
+I did not. However, I was expecting high line coverage and the test
+did reveal high line coverage. During my testing, my intention was
+to prioritize the search for errors rather than test for basic
+functionality. Therefore, the tests I designed skipped over many
+branches.
+
+7. A test suite written using only input domain partitioning 
+would likely fair worse in a coverage evaluation when compared to
+a test suite written to optimize coverage metrics. IDP prioritizes
+those domains of input which are most relevant. This may result in 
+poor branch coverage because many inputs are not being tested and 
+therefore many branches are not being taken.

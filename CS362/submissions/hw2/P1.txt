@@ -1,0 +1,4 @@
+Warmup test throws an ArrayIndexOutOfBoundsException due to 
+its flawed construction. It attempts to decrement from zero
+to the length of the array rather increment from zero to the
+length of the array.
