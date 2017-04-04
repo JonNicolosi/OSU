@@ -1,0 +1,45 @@
+<h1>You submitted a {{methodType}} request</h1>
+<p>This website will show what type of request was made and then a table of the query (url) parameters and/or the body parameters</p>
+
+<p>The number of query string parameters is: {{queryCount}}</p>
+<p>The number of body parameters is: {{bodyCount}}</p>
+
+{{#if queryCount}}
+  <table>
+    <caption><p>Query Parameters</p></caption>
+    <thead>
+      <tr>
+        <th>Key</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+    {{#each queryParams}}
+      <tr>
+        <td>{{this.name}}</td>
+        <td>{{this.value}}</td>
+      </tr>
+    {{/each}}
+    </tbody>
+  </table>
+{{/if}}
+
+{{#if bodyCount}}
+  <table>
+    <caption><p>Body Parameters</p></caption>
+    <thead>
+      <tr>
+        <th>Key</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+    {{#each bodyParams}}
+      <tr>
+        <td>{{this.name}}</td>
+        <td>{{this.value}}</td>
+      </tr>
+    {{/each}}
+    </tbody>
+  </table>
+{{/if}}

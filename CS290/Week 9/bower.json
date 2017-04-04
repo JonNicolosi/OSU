@@ -1,0 +1,23 @@
+{
+  "name": "databaseui",
+  "description": "database interaction",
+  "main": "server.js",
+  "authors": [
+    "Jonathan Nicolosi"
+  ],
+  "license": "MIT",
+  "moduleType": [
+    "amd",
+    "node"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6"
+  }
+}

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head><title>Advanced Requests</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<ul id="ul1">
+  <li><a class="active" href="index.html">Home</a></li>
+  <li><a href="getkey.html">Getting Your API Key</a></li>
+  <li><a href="makingrequests.html">Making Requests</a></li>
+  <li><a href="advancedrequests.html">Advanced Requests</a></li>
+</ul>
+
+<div id="div1"><img src="quandllogo.png"></div>
+
+<div id="div2"></div>
+
+<div id="div5"><br><b>Building a search query using forms:</b></br>
+	<br>Now we're going to use forms to search for a stock. Then we will display the search results containing the stock symbols. Finally, we will build a URL with a start date and an end date to pull all of the closing prices for the stock we want between two specific dates. Press "Submit" to see what the code does:</br>
+
+<br>	
+<form>
+<fieldset>
+<legend>Enter the stock we want to find</legend>
+<input type="text" name="stock" id="stock">
+</fieldset>
+</form>
+</br>
+
+<button type="button" id="button">Submit</button>
+
+<p id="searchresults"></p>
+
+
+<b>First</b>, we're going to have to modify our variables a bit:  
+
+<br><b><span style="color:blue"><code>
+
+			<br>var type = "GET";</br>
+			var baseURL = "https://www.quandl.com/api/v3/datasets";
+			<br>var dataType = ".json";</br>
+			var apiKey = "?api_key=m5x-3s5oVrWWUpATSkxu";
+			<br>var databaseCode = "&database_code=WIKI&query=";</br>
+			var stock = document.getElementById("stock").value;
+
+</code></span></b></br>
+
+<br><b>Next</b>, we have to modify our URL, rearranging our variables into their proper order.</br>
+
+<br><b><span style="color:blue"><code>
+
+request.open(type, baseURL + dataType + apiKey + databaseCode + stock + "&per_page=10&page=1", true);
+
+</code></span></b></br>
+
+<br><b>Last</b>, we have to modify our event listener to perform a loop. Our search result will be an object with multiple results stored in keys. We want to loop through the object's keys and return all of the search results to locate the proper database code.</br>
+
+<br><b><span style="color:blue"><code>
+
+request.addEventListener("load", function() {
+				<br>var response = JSON.parse(request.responseText);</br>
+				var text = "";
+				for(j = 0; j < response.datasets.length; j++){
+					<br>text += "Search Results: " + response.datasets[j].name + " (Dataset Code: " + response.datasets[j].dataset_code + ")" + "&ltbr&gt";</br>
+				<br>}</br>
+				<br>document.getElementById("searchresults").innerHTML = text;</br>
+			})
+
+</code></span></b></br>
+
+
+
+<br><b>Customizing the JSON object by parameterizing our query:</b></br>
+<br>Now that we know the dataset code for the stock we want to look up, we can append it to a query. Furthermore, we can also set the dates (in YYYY-MM-DD format) we want to get the prices for. Parameterizing the query dramatically reduces the response time from the server and saves bandwidth.</br>
+
+
+<br><b>First</b>, we have to modify our URL again, rearranging our variables into their proper order.</br>
+
+<br><b><span style="color:blue"><code>
+
+			var type = "GET";
+			<br>var baseURL = "https://www.quandl.com/api/v3/datasets";</br>
+			var dataType = "/data.json";
+			<br>var apiKey = "?api_key=m5x-3s5oVrWWUpATSkxu";</br>
+			var databaseCode = "/WIKI/";
+			<br>var datasetcode = document.getElementById("datasetcode").value;</br>
+			var request = new XMLHttpRequest();
+			<br>var startdate = document.getElementById("StartDate").value;</br>
+			var enddate = document.getElementById("EndDate").value;
+
+
+</code></span></b></br>
+
+<br><b>Next</b>, we have to provide some fail-safes just in case our user doesn't enter either a start date or an end date.</br>
+
+<br><b><span style="color:blue"><code>
+
+			<br>if(startdate!="" && enddate!=""){</br>
+				request.open(type, baseURL + databaseCode + datasetcode + dataType + apiKey + "&end_date=" + enddate + "&start_date=" + startdate, true);
+			}
+			<br>else if(startdate==""){</br>
+				request.open(type, baseURL + databaseCode + datasetcode + dataType + apiKey + "&end_date=" + enddate, true);
+			}
+			<br>else if(enddate==""){</br>
+				request.open(type, baseURL + databaseCode + datasetcode + dataType + apiKey + "&start_date=" + startdate, true);
+			}
+
+</code></span></b></br>
+
+<br><b>Last</b>, provide a loop to cycle through the object, pulling out all of the closing prices from the start date to the end date.</br>
+
+<br><b><span style="color:blue"><code>
+
+
+request.addEventListener("load", function() {
+				<br>var response = JSON.parse(request.responseText);</br>
+				var text = "";
+				for(i = 0; i < response.dataset_data.data.length; i++){
+					<br>text += response.dataset_data.data[i][0] + ": " + response.dataset_data.data[i][4] + "&ltbr&gt";</br>
+				}
+				<br>document.getElementById("displayprices").innerHTML = text;</br>
+				
+			})
+
+			<br>request.send(null);</br>
+
+</code></span></b></br>
+
+<br>Press "Submit" to see what the code does:</br>
+
+<br>
+<form>
+<fieldset>
+<legend>Enter the dataset code and the dates</legend>
+<legend>Dateset Code:</legend>
+<input type="text" name="datasetcode" id="datasetcode">
+<legend>Start Date:</legend>
+<input type="text" name="StartDate" id="StartDate">
+<legend>End Date:</legend>
+<input type="text" name="EndDate" id="EndDate">
+</fieldset>
+</form>
+</br>
+<button type="button" id="button2">Submit</button>
+
+<p id="displayprices"></p>
+
+</div>
+
+
+
+
+<script>
+		document.getElementById("button").addEventListener("click", function(){
+		
+			var type = "GET";
+			var baseURL = "https://www.quandl.com/api/v3/datasets";
+			var dataType = ".json";
+			var apiKey = "?api_key=m5x-3s5oVrWWUpATSkxu";
+			var databaseCode = "&database_code=WIKI&query=";
+			var stock = document.getElementById("stock").value;
+			var request = new XMLHttpRequest();
+			request.open(type, baseURL + dataType + apiKey + databaseCode + stock + "&per_page=10&page=1", true);
+			console.log(baseURL + dataType + apiKey + databaseCode + stock + "&per_page=10&page=1");
+			request.addEventListener("load", function() {
+				var response = JSON.parse(request.responseText);
+				var text = "";
+				for(j = 0; j < response.datasets.length; j++){
+					text += "Search Results: " + response.datasets[j].name + " (Dataset Code: " + response.datasets[j].dataset_code + ")" + "<br>";
+				}
+				document.getElementById("searchresults").innerHTML = text;
+			})
+			
+			request.send(null);
+
+		});
+		
+		
+		document.getElementById("button2").addEventListener("click", function(){
+		
+			var type = "GET";
+			var baseURL = "https://www.quandl.com/api/v3/datasets";
+			var dataType = "/data.json";
+			var apiKey = "?api_key=m5x-3s5oVrWWUpATSkxu";
+			var databaseCode = "/WIKI/";
+			var datasetcode = document.getElementById("datasetcode").value;
+			var request = new XMLHttpRequest();
+			var startdate = document.getElementById("StartDate").value;
+			var enddate = document.getElementById("EndDate").value;
+			if(startdate!="" && enddate!=""){
+				request.open(type, baseURL + databaseCode + datasetcode + dataType + apiKey + "&end_date=" + enddate + "&start_date=" + startdate, true);
+			}
+			else if(startdate==""){
+				request.open(type, baseURL + databaseCode + datasetcode + dataType + apiKey + "&end_date=" + enddate, true);
+			}
+			else if(enddate==""){
+				request.open(type, baseURL + databaseCode + datasetcode + dataType + apiKey + "&start_date=" + startdate, true);
+			}
+			
+			
+			request.addEventListener("load", function() {
+				var response = JSON.parse(request.responseText);
+				var text = "";
+				for(i = 0; i < response.dataset_data.data.length; i++){
+					text += response.dataset_data.data[i][0] + ": " + response.dataset_data.data[i][4] + "<br>";
+				}
+				document.getElementById("displayprices").innerHTML = text;
+				
+			})
+
+			request.send(null);
+
+		});
+		
+		
+  </script>
+
+
+
+</body>
+</html>

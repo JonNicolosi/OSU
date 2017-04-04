@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head><title>Making Requests</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+<ul id="ul1">
+  <li><a class="active" href="index.html">Home</a></li>
+  <li><a href="getkey.html">Getting Your API Key</a></li>
+  <li><a href="makingrequests.html">Making Requests</a></li>
+  <li><a href="advancedrequests.html">Advanced Requests</a></li>
+</ul>
+
+<div id="div1"><img src="quandllogo.png"></div>
+
+<div id="div2"></div>
+
+<div id="div4" class="column"><b>The Structure of a Quandl API Call:</b>
+	<br>Data on Quandl is organized into databases and datasets. First we will explore the anatomy of an API call, piece by piece.</br>
+	<br>Below is an example of what an authenticated URL query looks like:</br>
+	<br><a href="https://www.quandl.com/api/v3/datasets/WIKI/FB.json?api_key=m5x-3s5oVrWWUpATSkxu">https://www.quandl.com/api/v3/datasets/WIKI/FB.json?api_key=m5x-3s5oVrWWUpATSkxu</a></br>
+	<br>First we have the <b>base</b>: <b><span style="color:blue"><code>https://www.quandl.com/api/v3/datasets</code></span></b>
+	<br>Second, we have the <b>database code</b>: <b><span style="color:blue"><code>/WIKI</code></span></b>
+	<br>Then the <b>data</b> (in this case, a JSON object): <b><span style="color:blue"><code>/FB.json</code></span></b>
+	<br>And at the end, we append our <b>API key</b>: <b><span style="color:blue"><code>?api_key=m5x-3s5oVrWWUpATSkxu</code></span></b>
+	<br><br>If you were to click the link above, a JSON object would appear in your browser. JSON objects have keys. 
+	Each key is associated with a value. See the picture below:</br></br> 
+	<br><img src="https://s3-us-west-2.amazonaws.com/jonathannicolosihowto/jsonex.PNG" height="250" width="1150"></img></br>
+	<br>The example has been truncated because that particular query is rather large, returning the entire history of Facebook's stock price to yesterday. 
+	I will demonstrate how to make transformations on the data by modifying the query.</br>
+	
+	<br>What we want to do is make the request using a Javascript function called XMLHttpRequest. 
+	Despite its name, XMLHttpRequest can be used to retrieve any type of data, not just XML. After we retrive the data, we want to parse it into a JSON object.</br>
+
+	<br><b>First</b>, create a new XMLHttpRequest:</br>
+	<br><b><span style="color:blue"><code>var request = new XMLHttpRequest();</code></span></b></br>
+	<br><b>Next</b>, we have to use a method on our <b><span style="color:blue"><code>request</code></span></b> element called open(<i>method, url, async</i>), passing in parameters that we will get from the user.</br>
+	<br>The method is either a GET request or a POST request. I will show you how to perform a GET request in this tutorial. I will assign the method to a variable:</br>
+	<br><b><span style="color:blue"><code>var type = "GET";</code></span></b></br>
+	<br><b>Additionally</b>, we can create variables to represent the parts of the URL we want to construct:</br>
+	<br><b><span style="color:blue"><code>var baseURL = "https://www.quandl.com/api/v3/datasets";</code></span></b></br>
+	<br><b><span style="color:blue"><code>var databaseCode = "/WIKI";</code></span></b></br>
+	<br><b><span style="color:blue"><code>var data = "/FB.json";</code></span></b></br>
+	<br><b><span style="color:blue"><code>var apiKey = "?api_key=m5x-3s5oVrWWUpATSkxu";</code></span></b></br>
+	<br><b>Finally,</b> we want our request to be asynchronous, so we're going to set the last parameter to <b><span style="color:blue"><code>true</code></span></b>.</br>
+	<br><b>Putting it together gives you this as our open method:</b></br>
+	<br><b><span style="color:blue"><code>request.open(type, baseURL + databaseCode + data + apiKey, true);</code></span></b></br>
+	<br>However, we're not done yet. We need to parse out the necessary information from the JSON object. The raw JSON is not useful to us.</br>
+	<br>We're going to use a JSON method called <b><span style="color:blue"><code>JSON.parse(</code></span></b><i><b>text</b></i><b><span style="color:blue"><code>)</code></span></b>. This method takes as a parameter a string of text. Now we will use another method to take the response that is created by <b><span style="color:blue"><code>var request = new XMLHttpRequest();</code></span></b> and turn it into a string. This method is called <b><span style="color:blue"><code>.responseText;</code></span>.</b> So the full command for parsing the JSON ends up looking like this:</br>
+	<br><b><span style="color:blue"><code>var response = JSON.parse(request.responseText);</code></span></b></br>
+	
+	<br>Now all we have to do is use the dot operator to cycle through the keys of the JSON object. We can then assign the value of the key to a variable. Observe:</br>
+	<br><b><span style="color:blue"><code>var closingprice = response.dataset.data[0][4];</code></span></b></br>
+	
+	<br>"0" is the most recent day. "4" is the number representing the closing stock price.</br>
+	
+	<br><b>Finally</b>, we have our script:</br>
+	<br><b><span style="color:blue"><code>
+	
+	
+	
+	<br>document.getElementById("button").addEventListener("click", function(){</br>
+		
+			<br>var type = "GET";</br>
+			<br>var baseURL = "https://www.quandl.com/api/v3/datasets";</br>
+			<br>var databaseCode = "/WIKI";</br>
+			<br>var data = "/FB.json";</br>
+			<br>var apiKey = "?api_key=m5x-3s5oVrWWUpATSkxu";</br>
+			<br>var request = new XMLHttpRequest();</br>
+			<br>request.open(type, baseURL + databaseCode + data + apiKey, true);</br>
+			
+			<br>request.addEventListener("load", function() {</br>
+				<br>var response = JSON.parse(request.responseText);</br>
+				<br>var closingprice = response.dataset.data[0][4];</br>
+				<br>document.getElementById("fbclose").innerHTML = "Closing price: " + closingprice;</br>
+			<br>})</br>
+
+			<br>request.send(null);</br>
+
+		<br>});</br>
+	</code></span></b></br>
+	
+	<br>The script has been bound to a button by encapsulating it within the following code:</br>
+	
+	<br><b><span style="color:blue"><code>
+	
+	document.getElementById("button").addEventListener("click", function(){</code></span></b><i><b>main function code goes here</b></i><b><span style="color:blue"><code>});</br>
+	
+	</code></span></b></br>
+	
+	<br>The result of the script is shown below. Click the button to get Facebook's most recent closing price: </br>
+	
+	<br><button type="button" id="button">Submit</button></br>
+	
+	<p id="fbclose"></p>
+	
+	In the section entitled "Advanced Requests", I will demonstrate how to search for a dataset (i.e. search for a stock).
+	
+<br></br>	
+</div>
+
+  <script>
+		document.getElementById("button").addEventListener("click", function(){
+		
+			var type = "GET";
+			var baseURL = "https://www.quandl.com/api/v3/datasets";
+			var databaseCode = "/WIKI";
+			var data = "/FB.json";
+			var apiKey = "?api_key=m5x-3s5oVrWWUpATSkxu";
+			var request = new XMLHttpRequest();
+			request.open(type, baseURL + databaseCode + data + apiKey, true);
+			
+			request.addEventListener("load", function() {
+				var response = JSON.parse(request.responseText);
+				var closingprice = response.dataset.data[0][4];
+				document.getElementById("fbclose").innerHTML = "Closing price: " + closingprice;
+			})
+
+			request.send(null);
+
+		});
+  </script>
+
+
+</body>
+</html>
