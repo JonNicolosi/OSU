@@ -1,7 +1,7 @@
 # OSU
 Assignments from OSU
 
-CS165 - ACCELERATED INTRO TO COMP SCI
+* CS165 - ACCELERATED INTRO TO COMP SCI
 
 * CS261 - DATA STRUCTURES
   * Programming Assignment 1 - C Pointers Practice
@@ -12,9 +12,20 @@ CS165 - ACCELERATED INTRO TO COMP SCI
   * Programming Assignment 6 - HashTable Implementation of a Concordance
   * Programming Assignment 7 - Graphs
 
-CS271 - COMPUTER ARCH & ASSEM LANGUAGE
+* CS271 - COMPUTER ARCH & ASSEM LANGUAGE
 
-CS290 - WEB DEVELOPMENT
+* CS290 - WEB DEVELOPMENT
+  * HTML/CSS Assignment
+  * Activities:
+    * JS Environment
+    * JS Functions
+    * JS Objects
+  * Higher-Order Functions and Objects
+  * DOM and Events
+  * Activity: AJAX Interactions
+  * GET and POST checker
+  * Database Interactions and UI
+  * How To
 
 CS325 - ANALYSIS OF ALGORITHMS
 
