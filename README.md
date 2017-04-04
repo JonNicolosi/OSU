@@ -4,13 +4,13 @@ Assignments from OSU
 * CS165 - ACCELERATED INTRO TO COMP SCI
 
 * CS261 - DATA STRUCTURES
-  * Programming Assignment 1 - C Pointers Practice
-  * Programming Assignment 2 - Amortized Analysis and Dynamic Array Stack Application
-  * Programming Assignment 3 - Circular Linked List
-  * Programming Assignment 4 - Binary Search Trees
-  * Programming Assignment 5 - Heap Implementation and To-Do List
-  * Programming Assignment 6 - HashTable Implementation of a Concordance
-  * Programming Assignment 7 - Graphs
+  * C Pointers Practice
+  * Amortized Analysis and Dynamic Array Stack Application
+  * Circular Linked List
+  * Binary Search Trees
+  * Heap Implementation and To-Do List
+  * HashTable Implementation of a Concordance
+  * Graphs
 
 * CS271 - COMPUTER ARCH & ASSEM LANGUAGE
 
@@ -27,7 +27,14 @@ Assignments from OSU
   * Database Interactions and UI
   * How To
 
-CS325 - ANALYSIS OF ALGORITHMS
+* CS325 - ANALYSIS OF ALGORITHMS
+  * Foundations and Growth of Functions
+  * Divide and Conquer & Recurrences
+  * Dynamic Programming
+  * Greedy Algorithms
+  * Graph Algorithms
+  * Linear Programming
+  * NP-Completeness
 
 CS340 - INTRODUCTION TO DATABASES
 
